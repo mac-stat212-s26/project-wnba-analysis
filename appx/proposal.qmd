@@ -1,5 +1,36 @@
 ---
-title: "Proposal"
+title: "Insert title here"
+author: "Will St. John, Hamza Mahamud, Nox Matse"
 ---
 
-Your proposal go here.
+# Project Description
+[a short description of the project]
+
+# Research Questions
+
+1. asdf
+2. asdf
+3. asdf
+
+# Inspiration
+[the reasons/inspirations behind choosing the topic]
+
+# Potential Data Set
+[one potential data set that can be used to answer the research questions]
+
+# Communication Plan
+[communication plan, ie, primary communication channel (eg, Google Chat, Slack, Email), expected response time (eg, 24 hours during the week), meeting time (eg, “we will meet 7-8pm every Wednesday”)]
+
+# Roles
+
+- Point of Contact: [insert name] - the main person to email the instructor/preceptors
+- Technical Lead: [insert name] - the person who will oversee the code base and website
+- Style Lead: [insert name] - the person who will make sure the code is following the COMP/STAT 112/212: Code Styling Guide
+
+
+# Conflic Resolution
+If a team member misses a deadline, how will the team handle it? How will you make decisions if the team is split 50/50 on a something?
+
+
+# Rough Implementation Plan
+A rough implementation plan, ie, list of tasks with due date and roles–refer to the list of deliverables when building your list. The plan should be added as GitHub Issues within the project repository–see the callout box below for details.
