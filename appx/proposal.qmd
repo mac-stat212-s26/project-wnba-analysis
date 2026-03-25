@@ -1,36 +1,52 @@
 ---
-title: "Insert title here"
+title: "\"Pressure's On!\" Determinants of Draft Selection in the WNBA: an Interactive Study"
 author: "Will St. John, Hamza Mahamud, Nox Matse"
 ---
 
 # Project Description
-[a short description of the project]
+We want to design an interactive dashboard that allows the user to either:
+
+- Select a player and see stats on that player, providing an overall rating for them
+- Select specific stats and see which players are the best
+
+We want to use an API from stats.WNBA.com or something similar to get the stats, then visualize the data.
 
 # Research Questions
 
-1. asdf
-2. asdf
-3. asdf
+1. What influences whether a player is selected first overall in an WNBA draft?
+2. What factors influence success in the WNBA/Who has the best [insert basketball stat]?
+3. What players should I pick for my All-Star team?
 
 # Inspiration
-[the reasons/inspirations behind choosing the topic]
+We enjoy basketball and wanted to explore a topic closely related to how it functions and the players we get to watch. Mostly we are curious how the drafting process works and what factors that affect player selection. The WNBA is underexplored, and exploration of the NBA already exists so we wanted something more novel. Hopefully a fun thing to do is ti simulate being a coach and having to select a player given certain factors.
 
 # Potential Data Set
-[one potential data set that can be used to answer the research questions]
+Dataset Link: 
+
+- Option 1: [Player Data 1997-2021](https://www.kaggle.com/datasets/mattop/wnba-draft-basketball-player-data-1997-2021)
+- Option 2: [WNBA Salaries 2025](https://www.kaggle.com/datasets/max1220/wnba-2025-salary)
+- Option 3: [WNBA Gamelogs 2015-2025](https://www.kaggle.com/datasets/natoshakennebrew/wnba-gamelogs-2015-2024)
+- Option 4: Use an API to get stats from [stats.WNBA.com](https://stats.wnba.com/leaders/?Season=2025&SeasonType=Regular%20Season)
+
 
 # Communication Plan
-[communication plan, ie, primary communication channel (eg, Google Chat, Slack, Email), expected response time (eg, 24 hours during the week), meeting time (eg, “we will meet 7-8pm every Wednesday”)]
+We plan on communicating via text, and catching up in class periodically when we see fit.
+
 
 # Roles
 
-- Point of Contact: [insert name] - the main person to email the instructor/preceptors
-- Technical Lead: [insert name] - the person who will oversee the code base and website
-- Style Lead: [insert name] - the person who will make sure the code is following the COMP/STAT 112/212: Code Styling Guide
+- Point of Contact: Hamza - the main person to email the instructor/preceptors
+- Technical Lead: Will - the person who will oversee the code base and website
+- Style Lead: Nox - the person who will make sure the code is following the COMP/STAT 112/212: Code Styling Guide
 
 
 # Conflic Resolution
-If a team member misses a deadline, how will the team handle it? How will you make decisions if the team is split 50/50 on a something?
+Conflict resolution will be handled on a case by case basis. the team will be flexible in dealing with issues, provided that communication is open. in any more serious contexts, Amin will be consulted.
 
 
 # Rough Implementation Plan
-A rough implementation plan, ie, list of tasks with due date and roles–refer to the list of deliverables when building your list. The plan should be added as GitHub Issues within the project repository–see the callout box below for details.
+
+- Decide on a data set (Apr 1)
+- Create professional visualizations (ie. player card, stat summary dashboard) (Apr 22)
+- Implement into shiny app (Apr 29)
+- Beautify (May 4)
