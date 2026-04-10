@@ -1,5 +1,7 @@
 ---
 title: "Case Study"
+author: "Will St. John, Hamza Mahamud, Nox Matse"
+
 ---
 
 > [Link to article: Pockets by Pudding](https://pudding.cool/2018/08/pockets/)
