@@ -1,5 +1,6 @@
 ---
-title: "\"Pressure's On!\" Determinants of Draft Selection in the WNBA: an Interactive Study"
+title: "Proposal"
+subtitle: "\"Pressure's On!\" Determinants of Draft Selection in the WNBA: an Interactive Study"
 author: "Will St. John, Hamza Mahamud, Nox Matse"
 ---
 
@@ -37,7 +38,7 @@ We plan on communicating via text, and catching up in class periodically when we
 
 - Point of Contact: Hamza - the main person to email the instructor/preceptors
 - Technical Lead: Will - the person who will oversee the code base and website
-- Style Lead: Nox - the person who will make sure the code is following the COMP/STAT 112/212: Code Styling Guide
+- Style Lead: Nox - the person who will make sure the code is following the COMP/STAT 112/212: [Code Styling Guide](https://docs.google.com/document/d/1iftIfk-mHUtomnGfAsZefoCeot1lZDb06Dapz-MflyI/edit?tab=t.0#heading=h.g9zsnr1qdz2i)
 
 
 # Conflic Resolution
