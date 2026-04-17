@@ -2,4 +2,111 @@
 title: "Case Study"
 ---
 
-Your case study go here.
+> [Link to article: Pockets by Pudding](https://pudding.cool/2018/08/pockets/)
+
+
+## Observations About Data Story Structure
+
+- Interactive “Close Reading” Design
+
+  - The article relies heavily on scroll-driven, close reading interactions.
+  - Visuals dynamically split and compare men vs. women’s pockets side-by-side.
+  - This allows readers to see differences unfold step-by-step rather than all at once.
+  - Key idea: the story is revealed progressively, not statically presented.
+
+- Visual Comparison as the Core Mechanism
+
+  - Comparisons are always visually paired and often mirrored.
+  - Differences are immediate and intuitive.
+  - Emphasizes comparison-first storytelling.
+
+- Consistent Visual Encoding
+
+  - Uses a consistent color scheme for men vs. women throughout.
+  - Reduces cognitive load and improves readability.
+  - Creates cohesion across all visuals.
+
+- Casual, Relatable Tone
+
+  - Language is conversational and sometimes blunt (e.g., “women’s pockets are ridiculous”).
+  - Increases accessibility and engagement.
+  - Does not undermine credibility.
+
+- Strong Integration of Statistics
+
+  - Key statistics are simple, memorable, and repeated.
+  - Example: women’s pockets are 48% shorter and 6.5% narrower.
+  - Data reinforces lived experience.
+
+- Balance of Informality + Rigor
+
+  - Blends casual storytelling with careful measurement.
+  - Builds trust without feeling overly academic.
+  - “Serious data, approachable voice.”
+
+- Interaction Reinforces Insight
+
+  - Readers can test what fits in pockets and explore variations.
+  - Insight is experienced rather than just stated.
+  - Improves retention and understanding.
+
+- Guided Discovery Structure
+  - The story progresses through:
+    1. Observation
+    2. Measurement
+    3. Exploration
+    4. Context
+  - Prevents cognitive overload and maintains engagement.
+
+---
+
+## Takeaways for Our Own Story
+
+- Use Progressive, Interactive Reveals
+
+  - Avoid presenting everything at once.
+  - Let readers discover results step-by-step.
+  - Consider scroll-based or layered visuals.
+
+- Prioritize Direct Comparisons
+
+  - Use side-by-side visuals for key groups.
+  - Make differences immediately visible.
+
+- Be Consistent With Visual Design
+
+  - Use a fixed color scheme and encoding.
+  - Apply consistently across all figures.
+
+- Write Casually—but With Purpose
+
+  - Use conversational language for relatability.
+  - Support claims with precise data.
+
+- Highlight a Few Key Numbers
+
+  - Focus on 1–2 central statistics.
+  - Reinforce them visually and textually.
+
+- Make Data Tangible
+
+  - Translate abstract metrics into real-world meaning.
+  - Help readers connect numbers to experience.
+
+- Let Users Interact With the Data
+
+  - Include filters, comparisons, or examples if possible.
+  - Encourage exploration and engagement.
+
+- Blend Story + Evidence
+
+  - Combine narrative with data.
+  - Avoid being purely technical or purely anecdotal.
+
+- Guide the Reader Carefully
+  - Structure flow as:
+    1. Hook
+    2. Key result
+    3. Exploration
+    4. Context
+  - Ensure each step leads naturally to the next.
