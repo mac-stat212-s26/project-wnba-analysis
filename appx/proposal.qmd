@@ -5,12 +5,7 @@ author: "Will St. John, Hamza Mahamud, Nox Matse"
 ---
 
 # Project Description
-We want to design an interactive dashboard that allows the user to either:
-
-- Select a player and see stats on that player, providing an overall rating for them
-- Select specific stats and see which players are the best
-
-We want to use an API from stats.WNBA.com or something similar to get the stats, then visualize the data.
+Our project focuses on the WNBA draft and player evaluation, using basketball statistics to understand how teams choose players and what factors lead to success in the league. Teams often consider criteria such as scoring ability, rebounding, passing, defensive performance, efficiency, and overall impact when selecting players. Through interactive data visualizations, this project will benefit sports fans, students, analysts, and anyone unfamiliar with basketball by making player comparisons and decision-making processes easier to understand.
 
 # Research Questions
 
@@ -22,6 +17,13 @@ We want to use an API from stats.WNBA.com or something similar to get the stats,
 We enjoy basketball and wanted to explore a topic closely related to how it functions and the players we get to watch. Mostly we are curious how the drafting process works and what factors that affect player selection. The WNBA is underexplored, and exploration of the NBA already exists so we wanted something more novel. Hopefully a fun thing to do is ti simulate being a coach and having to select a player given certain factors.
 
 # Potential Data Set
+We want to design an interactive dashboard that allows the user to either:
+
+- Select a player and see stats on that player, providing an overall rating for them
+- Select specific stats and see which players are the best
+
+We want to use an API from stats.WNBA.com or something similar to get the stats, then visualize the data.
+
 Dataset Link: 
 
 - Option 1: [Player Data 1997-2021](https://www.kaggle.com/datasets/mattop/wnba-draft-basketball-player-data-1997-2021)
