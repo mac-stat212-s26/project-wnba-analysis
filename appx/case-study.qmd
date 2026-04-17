@@ -5,7 +5,7 @@ title: "Case Study"
 > [Link to article: Pockets by Pudding](https://pudding.cool/2018/08/pockets/)
 
 
-# Observations About Data Story Structure
+## Observations About Data Story Structure
 
 - Interactive “Close Reading” Design
 
