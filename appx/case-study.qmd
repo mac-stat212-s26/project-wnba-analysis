@@ -60,7 +60,7 @@ title: "Case Study"
 
 ---
 
-# Takeaways for Our Own Story
+## Takeaways for Our Own Story
 
 - Use Progressive, Interactive Reveals
 
