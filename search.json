@@ -1,122 +1,86 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Project Title",
+    "objectID": "wa/wa-member3.html",
+    "href": "wa/wa-member3.html",
+    "title": "Member 3 First Name & Last Name Initial",
     "section": "",
-    "text": "Your report goes here.\n\n\nCode\n# a test code chunk",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Report</span>"
-    ]
+    "text": "Work area to try code"
   },
   {
-    "objectID": "eda/eda-member1.html",
-    "href": "eda/eda-member1.html",
+    "objectID": "wa/wa-member1.html",
+    "href": "wa/wa-member1.html",
     "title": "Member 1 First Name & Last Name Initial",
     "section": "",
-    "text": "Your exploratory data analysis of the team datasets go here.",
-    "crumbs": [
-      "EDA",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
-    ]
+    "text": "Work area to try code"
   },
   {
-    "objectID": "eda/eda-member2.html",
-    "href": "eda/eda-member2.html",
-    "title": "Member 2 First Name & Last Name Initial",
+    "objectID": "appx/proposal.html",
+    "href": "appx/proposal.html",
+    "title": "Proposal",
     "section": "",
-    "text": "Your exploratory data analysis of the team datasets go here.",
-    "crumbs": [
-      "EDA",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
-    ]
+    "text": "Project Description\nOur project focuses on the WNBA draft and player evaluation, using basketball statistics to understand how teams choose players and what factors lead to success in the league. Teams often consider criteria such as scoring ability, rebounding, passing, defensive performance, efficiency, and overall impact when selecting players. Through interactive data visualizations, this project will benefit sports fans, students, analysts, and anyone unfamiliar with basketball by making player comparisons and decision-making processes easier to understand.\n\n\nResearch Questions\n\nWhat influences whether a player is selected first overall in an WNBA draft?\nWhat factors influence success in the WNBA/Who has the best [insert basketball stat]?\nWhat players should I pick for my All-Star team?\n\n\n\nInspiration\nWe enjoy basketball and wanted to explore a topic closely related to how it functions and the players we get to watch. Mostly we are curious how the drafting process works and what factors that affect player selection. The WNBA is underexplored, and exploration of the NBA already exists so we wanted something more novel. Hopefully a fun thing to do is ti simulate being a coach and having to select a player given certain factors.\n\n\nPotential Data Set\nWe want to design an interactive dashboard that allows the user to either:\n\nSelect a player and see stats on that player, providing an overall rating for them\nSelect specific stats and see which players are the best\n\nWe want to use an API from stats.WNBA.com or something similar to get the stats, then visualize the data.\nDataset Link:\n\nOption 1: Player Data 1997-2021\nOption 2: WNBA Salaries 2025\nOption 3: WNBA Gamelogs 2015-2025\nOption 4: Use an API to get stats from stats.WNBA.com\n\n\n\nCommunication Plan\nWe plan on communicating via text, and catching up in class periodically when we see fit.\n\n\nRoles\n\nPoint of Contact: Hamza - the main person to email the instructor/preceptors\nTechnical Lead: Will - the person who will oversee the code base and website\nStyle Lead: Nox - the person who will make sure the code is following the COMP/STAT 112/212: Code Styling Guide\n\n\n\nConflic Resolution\nConflict resolution will be handled on a case by case basis. the team will be flexible in dealing with issues, provided that communication is open. in any more serious contexts, Amin will be consulted.\n\n\nRough Implementation Plan\n\nDecide on a data set (Apr 1)\nCreate professional visualizations (ie. player card, stat summary dashboard) (Apr 22)\nImplement into shiny app (Apr 29)\nBeautify (May 4)"
   },
   {
     "objectID": "eda/eda-member3.html",
     "href": "eda/eda-member3.html",
     "title": "Member 3 First Name & Last Name Initial",
     "section": "",
-    "text": "Your exploratory data analysis of the team datasets go here.",
-    "crumbs": [
-      "EDA",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
-    ]
+    "text": "Your exploratory data analysis of the team datasets go here."
   },
   {
-    "objectID": "appx/proposal.html",
-    "href": "appx/proposal.html",
-    "title": "Appendix A — Proposal",
+    "objectID": "eda/eda-member1.html",
+    "href": "eda/eda-member1.html",
+    "title": "Will S",
     "section": "",
-    "text": "Project Description\nOur project focuses on the WNBA draft and player evaluation, using basketball statistics to understand how teams choose players and what factors lead to success in the league. Teams often consider criteria such as scoring ability, rebounding, passing, defensive performance, efficiency, and overall impact when selecting players. Through interactive data visualizations, this project will benefit sports fans, students, analysts, and anyone unfamiliar with basketball by making player comparisons and decision-making processes easier to understand.\n\n\nResearch Questions\n\nWhat influences whether a player is selected first overall in an WNBA draft?\nWhat factors influence success in the WNBA/Who has the best [insert basketball stat]?\nWhat players should I pick for my All-Star team?\n\n\n\nInspiration\nWe enjoy basketball and wanted to explore a topic closely related to how it functions and the players we get to watch. Mostly we are curious how the drafting process works and what factors that affect player selection. The WNBA is underexplored, and exploration of the NBA already exists so we wanted something more novel. Hopefully a fun thing to do is ti simulate being a coach and having to select a player given certain factors.\n\n\nPotential Data Set\nWe want to design an interactive dashboard that allows the user to either:\n\nSelect a player and see stats on that player, providing an overall rating for them\nSelect specific stats and see which players are the best\n\nWe want to use an API from stats.WNBA.com or something similar to get the stats, then visualize the data.\nDataset Link:\n\nOption 1: Player Data 1997-2021\nOption 2: WNBA Salaries 2025\nOption 3: WNBA Gamelogs 2015-2025\nOption 4: Use an API to get stats from stats.WNBA.com\n\n\n\nCommunication Plan\nWe plan on communicating via text, and catching up in class periodically when we see fit.\n\n\nRoles\n\nPoint of Contact: Hamza - the main person to email the instructor/preceptors\nTechnical Lead: Will - the person who will oversee the code base and website\nStyle Lead: Nox - the person who will make sure the code is following the COMP/STAT 112/212: Code Styling Guide\n\n\n\nConflic Resolution\nConflict resolution will be handled on a case by case basis. the team will be flexible in dealing with issues, provided that communication is open. in any more serious contexts, Amin will be consulted.\n\n\nRough Implementation Plan\n\nDecide on a data set (Apr 1)\nCreate professional visualizations (ie. player card, stat summary dashboard) (Apr 22)\nImplement into shiny app (Apr 29)\nBeautify (May 4)",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
-    ]
+    "text": "One of our datasets would require some webscrapping to get access to the data. I wanted to try just that.\nI started by looking at the robots.txt for the website and learned that we can explore it.\nFirst I had to install rvest on our virtual environment\n\n\nCode\nlibrary(rvest)\nlibrary(tidyverse)\nlibrary(ggthemes)\n\n\nThen I\n\n\nCode\n# Helper function to reduce html_elements() |&gt; html_text() code duplication\nget_text_from_page &lt;- function(page, css_selector) {\n    page |&gt;\n        html_elements(css_selector) |&gt;\n        html_text()\n}\n\nscrape_page &lt;- function(url) {\n    Sys.sleep(2)\n    page &lt;- read_html(url)\n    column_names = get_text_from_page(page, \".Table__TH\")\n    table &lt;- get_text_from_page(page, \".Table__TD\")\n    \n    # get index and names\n    names_index &lt;- table[1:100]\n    index &lt;- names_index[seq(from = 1, to = length(names_index), by=2)]\n    names &lt;- names_index[seq(from = 2, to = length(names_index), by=2)]\n    \n    # get stat values\n    df &lt;- data.frame(matrix(table[101:length(table)], nrow = length(index), ncol=20, byrow = TRUE))\n    df &lt;- cbind(index, names, df)\n    names(df) &lt;- column_names\n    df &lt;- df %&gt;% mutate(across(-c(Name, POS), as.numeric))\n    return(df)\n}\n\n\n\n\nCode\nbase_url &lt;- \"https://www.espn.com/wnba/stats/player\"\ndf &lt;- scrape_page(base_url)\n\nwrite_csv(df, \"../data/raw/ESPN_WNBA_Top50RegularSeason_2025.csv\")\n\n\n\n\nCode\ndf %&gt;%\n  ggplot(aes(x = GP, y = RK)) + \n  geom_point() +\n  scale_y_reverse()+ \n  labs(x = \"Games Played\", y = \"Rank\", title = \"Are the best players in more games?\", subtitle = \"Not really - many players play often but don't rank highly\") + \n  theme_classic() + \n  theme(\n    axis.title.x = element_text(size = 10),\n    axis.title.y = element_text(size = 10),\n    axis.text.x = element_text(size = 8),\n    axis.text.y = element_text(size = 8),\n    plot.title = element_text(size = 14, face = \"bold\"),\n    plot.subtitle = element_text(size = 12, face = \"italic\"),\n  )\n\n\n\n\n\n\n\n\n\nCode\ndf %&gt;%\n  ggplot(aes(x = RK, fill = POS)) + \n  geom_density(alpha = 0.5) +\n  scale_x_reverse() + \n  scale_color_colorblind() +\n  facet_wrap(\n    ~POS,\n    labeller = as_labeller(c(\"C\" = \"Center\", \"F\" = \"Forward\", \"G\" = \"Guards\"))\n      ) + \n  labs(x = \"Rank\", y = \"Density\", title = \"Are the best players a particular position?\", subtitle = \"Most Centers are average; There are two types of Forwards and Guards\") + \n  theme_classic() + \n  theme(\n    axis.title.x = element_text(size = 10),\n    axis.title.y = element_text(size = 10),\n    axis.text.x = element_text(size = 8),\n    axis.text.y = element_text(size = 8),\n    plot.title = element_text(size = 14, face = \"bold\"),\n    plot.subtitle = element_text(size = 12, face = \"italic\"),\n    legend.position = \"none\"\n  )"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Who’s On My Team?",
+    "section": "",
+    "text": "Provide some background for the WNBA\n\n\n\n\nA logical first question is:\n\n\n\n\n“Are the best players simply the most experienced?”\n\n\n\n\nIf we look at the data…\n\n\n\n\n…we can see that many players can play for a long time but not necessarily be the best ranking."
+  },
+  {
+    "objectID": "eda/eda-member2.html",
+    "href": "eda/eda-member2.html",
+    "title": "Member 2 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here."
   },
   {
     "objectID": "appx/case-study.html",
     "href": "appx/case-study.html",
-    "title": "Appendix B — Case Study",
+    "title": "Case Study",
     "section": "",
-    "text": "Observations About Data Story Structure",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
-    ]
+    "text": "Link to article: Pockets by Pudding"
   },
   {
     "objectID": "appx/case-study.html#observations-about-data-story-structure",
     "href": "appx/case-study.html#observations-about-data-story-structure",
-    "title": "Appendix B — Case Study",
-    "section": "",
-    "text": "Interactive “Close Reading” Design\n\nThe article relies heavily on scroll-driven, close reading interactions.\nVisuals dynamically split and compare men vs. women’s pockets side-by-side.\nThis allows readers to see differences unfold step-by-step rather than all at once.\nKey idea: the story is revealed progressively, not statically presented.\n\nVisual Comparison as the Core Mechanism\n\nComparisons are always visually paired and often mirrored.\nDifferences are immediate and intuitive.\nEmphasizes comparison-first storytelling.\n\nConsistent Visual Encoding\n\nUses a consistent color scheme for men vs. women throughout.\nReduces cognitive load and improves readability.\nCreates cohesion across all visuals.\n\nCasual, Relatable Tone\n\nLanguage is conversational and sometimes blunt (e.g., “women’s pockets are ridiculous”).\nIncreases accessibility and engagement.\nDoes not undermine credibility.\n\nStrong Integration of Statistics\n\nKey statistics are simple, memorable, and repeated.\nExample: women’s pockets are 48% shorter and 6.5% narrower.\nData reinforces lived experience.\n\nBalance of Informality + Rigor\n\nBlends casual storytelling with careful measurement.\nBuilds trust without feeling overly academic.\n“Serious data, approachable voice.”\n\nInteraction Reinforces Insight\n\nReaders can test what fits in pockets and explore variations.\nInsight is experienced rather than just stated.\nImproves retention and understanding.\n\nGuided Discovery Structure\n\nThe story progresses through:\n\nObservation\nMeasurement\nExploration\nContext\n\nPrevents cognitive overload and maintains engagement.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
-    ]
+    "title": "Case Study",
+    "section": "Observations About Data Story Structure",
+    "text": "Observations About Data Story Structure\n\nInteractive “Close Reading” Design\n\nThe article relies heavily on scroll-driven, close reading interactions.\nVisuals dynamically split and compare men vs. women’s pockets side-by-side.\nThis allows readers to see differences unfold step-by-step rather than all at once.\nKey idea: the story is revealed progressively, not statically presented.\n\nVisual Comparison as the Core Mechanism\n\nComparisons are always visually paired and often mirrored.\nDifferences are immediate and intuitive.\nEmphasizes comparison-first storytelling.\n\nConsistent Visual Encoding\n\nUses a consistent color scheme for men vs. women throughout.\nReduces cognitive load and improves readability.\nCreates cohesion across all visuals.\n\nCasual, Relatable Tone\n\nLanguage is conversational and sometimes blunt (e.g., “women’s pockets are ridiculous”).\nIncreases accessibility and engagement.\nDoes not undermine credibility.\n\nStrong Integration of Statistics\n\nKey statistics are simple, memorable, and repeated.\nExample: women’s pockets are 48% shorter and 6.5% narrower.\nData reinforces lived experience.\n\nBalance of Informality + Rigor\n\nBlends casual storytelling with careful measurement.\nBuilds trust without feeling overly academic.\n“Serious data, approachable voice.”\n\nInteraction Reinforces Insight\n\nReaders can test what fits in pockets and explore variations.\nInsight is experienced rather than just stated.\nImproves retention and understanding.\n\nGuided Discovery Structure\n\nThe story progresses through:\n\nObservation\nMeasurement\nExploration\nContext\n\nPrevents cognitive overload and maintains engagement."
   },
   {
     "objectID": "appx/case-study.html#takeaways-for-our-own-story",
     "href": "appx/case-study.html#takeaways-for-our-own-story",
-    "title": "Appendix B — Case Study",
+    "title": "Case Study",
     "section": "Takeaways for Our Own Story",
-    "text": "Takeaways for Our Own Story\n\nUse Progressive, Interactive Reveals\n\nAvoid presenting everything at once.\nLet readers discover results step-by-step.\nConsider scroll-based or layered visuals.\n\nPrioritize Direct Comparisons\n\nUse side-by-side visuals for key groups.\nMake differences immediately visible.\n\nBe Consistent With Visual Design\n\nUse a fixed color scheme and encoding.\nApply consistently across all figures.\n\nWrite Casually—but With Purpose\n\nUse conversational language for relatability.\nSupport claims with precise data.\n\nHighlight a Few Key Numbers\n\nFocus on 1–2 central statistics.\nReinforce them visually and textually.\n\nMake Data Tangible\n\nTranslate abstract metrics into real-world meaning.\nHelp readers connect numbers to experience.\n\nLet Users Interact With the Data\n\nInclude filters, comparisons, or examples if possible.\nEncourage exploration and engagement.\n\nBlend Story + Evidence\n\nCombine narrative with data.\nAvoid being purely technical or purely anecdotal.\n\nGuide the Reader Carefully\n\nStructure flow as:\n\nHook\nKey result\nExploration\nContext\n\nEnsure each step leads naturally to the next.",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
-    ]
+    "text": "Takeaways for Our Own Story\n\nUse Progressive, Interactive Reveals\n\nAvoid presenting everything at once.\nLet readers discover results step-by-step.\nConsider scroll-based or layered visuals.\n\nPrioritize Direct Comparisons\n\nUse side-by-side visuals for key groups.\nMake differences immediately visible.\n\nBe Consistent With Visual Design\n\nUse a fixed color scheme and encoding.\nApply consistently across all figures.\n\nWrite Casually—but With Purpose\n\nUse conversational language for relatability.\nSupport claims with precise data.\n\nHighlight a Few Key Numbers\n\nFocus on 1–2 central statistics.\nReinforce them visually and textually.\n\nMake Data Tangible\n\nTranslate abstract metrics into real-world meaning.\nHelp readers connect numbers to experience.\n\nLet Users Interact With the Data\n\nInclude filters, comparisons, or examples if possible.\nEncourage exploration and engagement.\n\nBlend Story + Evidence\n\nCombine narrative with data.\nAvoid being purely technical or purely anecdotal.\n\nGuide the Reader Carefully\n\nStructure flow as:\n\nHook\nKey result\nExploration\nContext\n\nEnsure each step leads naturally to the next."
   },
   {
-    "objectID": "wa/wa-member1.html",
-    "href": "wa/wa-member1.html",
-    "title": "Appendix C — Member 1 First Name & Last Name Initial",
+    "objectID": "wa/WA.html",
+    "href": "wa/WA.html",
+    "title": "",
     "section": "",
-    "text": "Work area to try code",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
-    ]
+    "text": "Code\n\n\n\n\nThe is a work area to try code"
   },
   {
     "objectID": "wa/wa-member2.html",
     "href": "wa/wa-member2.html",
-    "title": "Appendix D — Member 2 First Name & Last Name Initial",
+    "title": "Member 2 First Name & Last Name Initial",
     "section": "",
-    "text": "Work area to try code",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
-    ]
-  },
-  {
-    "objectID": "wa/wa-member3.html",
-    "href": "wa/wa-member3.html",
-    "title": "Appendix E — Member 3 First Name & Last Name Initial",
-    "section": "",
-    "text": "Work area to try code",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
-    ]
+    "text": "Work area to try code"
   }
 ]
