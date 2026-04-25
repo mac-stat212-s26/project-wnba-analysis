@@ -48,9 +48,13 @@ scrape_page <- function(url) {
 
 ```{r}
 base_url <- "https://www.espn.com/wnba/stats/player"
-df <- scrape_page(base_url)
+urls <- str_c("https://www.espn.com/wnba/stats/player/_/season/", 1997:2025, "/seasontype/2")
 
-write_csv(df, "../data/raw/ESPN_WNBA_Top50RegularSeason_2025.csv")
+df <- scrape_page(base_url)
+dfs <- purrr::map2(urls, 1997:2025, ~ scrape_page(.x) |> dplyr::mutate(year = .y))
+
+df <- bind_rows(dfs)
+write_csv(df, "../data/raw/ESPN_WNBA_Top50RegularSeason_1997to2025.csv")
 ```
 
 
