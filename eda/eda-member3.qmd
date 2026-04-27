@@ -1,5 +1,39 @@
 ---
-title: "Member 3 First Name & Last Name Initial"
+title: "Hamza Mahamud"
 ---
 
-Your exploratory data analysis of the team datasets go here.
+
+```{r}
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(ggrepel)
+library(corrplot)
+library(scales)
+library(knitr)
+library(kableExtra)
+```
+
+```{r}
+WNBAStats <- read_csv("../data/processed/WNBA_Stats_1997_2026.csv")
+```
+
+```{r}
+WNBAStats |> 
+ggplot(aes(x = `Draft Pick`, y = `Points Per Game`)) +
+  geom_boxplot()
+```
+```{r}
+WNBAStats |> 
+  ggplot(aes(x = Height, y = `Draft Pick`, fill = `Draft Pick`)) + 
+    geom_col()
+```
+```{r}
+model1 <- lm(`Win Shares` ~ Position + `Year Drafted` + `Draft Pick` + Height + Weight + 
+               `Minutes Per Game` + `Points Per Game` + `Rebounds Per Game` + `Assists Per Game` + `Blocks Per Game` 
+                + `Steals Per Game` + `Turnovers Per Game` + `FG%` + `3P%` + `FT%` , data = WNBAStats)
+summary(model1)
+```
+
+
+
