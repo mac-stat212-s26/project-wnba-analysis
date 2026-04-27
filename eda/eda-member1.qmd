@@ -56,7 +56,29 @@ dfs <- purrr::map2(urls, 1997:2025, ~ scrape_page(.x) |> dplyr::mutate(year = .y
 df <- bind_rows(dfs)
 write_csv(df, "../data/raw/ESPN_WNBA_Top50RegularSeason_1997to2025.csv")
 ```
+```{r}
+espn <- read.csv("../data/raw/ESPN_WNBA_Top50RegularSeason_1997to2025.csv")
+kaggle <- read.csv("../data/raw/Kaggle_WNBA_draft.csv")
 
+espn <- espn %>%
+  mutate(
+    team.abbr = str_extract(Name, "[A-Z]{3}$"),
+    Name = str_remove(Name, "[A-Z]{3}$")
+  )
+
+head(espn)
+head(kaggle)
+
+
+combined <- espn %>%
+  full_join(
+    kaggle,
+    by = c("Name" = "player", "year" = "year"))
+
+
+write_csv(combined, "../data/raw/combined_ESPN_Kaggle_WNBA_1997to2025.csv")
+
+```
 
 ```{r}
 df %>%

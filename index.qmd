@@ -14,7 +14,7 @@ format:
 ```{r, echo=FALSE, include=FALSE}
 library(tidyverse)
 
-df <- read.csv("data/raw/ESPN_WNBA_Top50RegularSeason_2025.csv")
+df <- read.csv("data/raw/combined_ESPN_Kaggle_WNBA_1997to2025.csv")
 ```
 
 Provide some background for the WNBA
