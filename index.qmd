@@ -3,6 +3,7 @@ title: "Who's On My Team?"
 subtitle: "A WNBA Draft Analysis"
 format:
   closeread-html:
+    code-tools: true
     cr-style:
       narrative-background-color-overlay: transparent
       narrative-background-color-sidebar: transparent
@@ -13,7 +14,7 @@ format:
 ```{r, echo=FALSE, include=FALSE}
 library(tidyverse)
 
-df <- read.csv("data/raw/ESPN_WNBA_Top50RegularSeason_2025.csv")
+df <- read.csv("data/raw/combined_ESPN_Kaggle_WNBA_1997to2025.csv")
 ```
 
 Provide some background for the WNBA
