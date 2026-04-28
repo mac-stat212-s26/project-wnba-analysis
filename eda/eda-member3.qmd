@@ -29,11 +29,18 @@ WNBAStats |>
     geom_col()
 ```
 ```{r}
+# maybe make a plot with just the most relevant ones 
 model1 <- lm(`Win Shares` ~ Position + `Year Drafted` + `Draft Pick` + Height + Weight + 
                `Minutes Per Game` + `Points Per Game` + `Rebounds Per Game` + `Assists Per Game` + `Blocks Per Game` 
                 + `Steals Per Game` + `Turnovers Per Game` + `FG%` + `3P%` + `FT%` , data = WNBAStats)
 summary(model1)
 ```
 
+
+```{r}
+WNBAStats |> 
+  ggplot(aes(x = Height, y = Weight)) +
+    geom_point() 
+```
 
 
