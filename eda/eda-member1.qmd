@@ -1,5 +1,120 @@
 ---
-title: "Member 1 First Name & Last Name Initial"
+title: "Will S"
 ---
 
-Your exploratory data analysis of the team datasets go here.
+One of our [datasets](https://stats.wnba.com/leaders/?Season=2025&SeasonType=Regular%20Season) would require some webscrapping to get access to the data. I wanted to try just that.
+
+
+I started by looking at the [robots.txt](https://stats.wnba.com/robots.txt) for the website and learned that we can explore it.
+
+
+First I had to install rvest on our virtual environment
+
+```{r}
+library(rvest)
+library(tidyverse)
+library(ggthemes)
+```
+
+Then I 
+
+```{r}
+# Helper function to reduce html_elements() |> html_text() code duplication
+get_text_from_page <- function(page, css_selector) {
+    page |>
+        html_elements(css_selector) |>
+        html_text()
+}
+
+scrape_page <- function(url) {
+    Sys.sleep(2)
+    page <- read_html(url)
+    column_names = get_text_from_page(page, ".Table__TH")
+    table <- get_text_from_page(page, ".Table__TD")
+    
+    # get index and names
+    names_index <- table[1:100]
+    index <- names_index[seq(from = 1, to = length(names_index), by=2)]
+    names <- names_index[seq(from = 2, to = length(names_index), by=2)]
+    
+    # get stat values
+    df <- data.frame(matrix(table[101:length(table)], nrow = length(index), ncol=20, byrow = TRUE))
+    df <- cbind(index, names, df)
+    names(df) <- column_names
+    df <- df %>% mutate(across(-c(Name, POS), as.numeric))
+    return(df)
+}
+```
+
+```{r}
+base_url <- "https://www.espn.com/wnba/stats/player"
+urls <- str_c("https://www.espn.com/wnba/stats/player/_/season/", 1997:2025, "/seasontype/2")
+
+df <- scrape_page(base_url)
+dfs <- purrr::map2(urls, 1997:2025, ~ scrape_page(.x) |> dplyr::mutate(year = .y))
+
+df <- bind_rows(dfs)
+write_csv(df, "../data/raw/ESPN_WNBA_Top50RegularSeason_1997to2025.csv")
+```
+```{r}
+espn <- read.csv("../data/raw/ESPN_WNBA_Top50RegularSeason_1997to2025.csv")
+kaggle <- read.csv("../data/raw/Kaggle_WNBA_draft.csv")
+
+espn <- espn %>%
+  mutate(
+    team.abbr = str_extract(Name, "[A-Z]{3}$"),
+    Name = str_remove(Name, "[A-Z]{3}$")
+  )
+
+head(espn)
+head(kaggle)
+
+
+combined <- espn %>%
+  full_join(
+    kaggle,
+    by = c("Name" = "player", "year" = "year"))
+
+
+write_csv(combined, "../data/raw/combined_ESPN_Kaggle_WNBA_1997to2025.csv")
+
+```
+
+```{r}
+df %>%
+  ggplot(aes(x = GP, y = RK)) + 
+  geom_point() +
+  scale_y_reverse()+ 
+  labs(x = "Games Played", y = "Rank", title = "Are the best players in more games?", subtitle = "Not really - many players play often but don't rank highly") + 
+  theme_classic() + 
+  theme(
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+  )
+
+
+df %>%
+  ggplot(aes(x = RK, fill = POS)) + 
+  geom_density(alpha = 0.5) +
+  scale_x_reverse() + 
+  scale_color_colorblind() +
+  facet_wrap(
+    ~POS,
+    labeller = as_labeller(c("C" = "Center", "F" = "Forward", "G" = "Guards"))
+      ) + 
+  labs(x = "Rank", y = "Density", title = "Are the best players a particular position?", subtitle = "Most Centers are average; There are two types of Forwards and Guards") + 
+  theme_classic() + 
+  theme(
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+    legend.position = "none"
+  )
+```

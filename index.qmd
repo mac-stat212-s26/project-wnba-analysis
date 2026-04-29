@@ -1,10 +1,112 @@
 ---
-title: "Report"
+title: "Who's On My Team?"
+subtitle: "A WNBA Draft Analysis"
+format:
+  closeread-html:
+    code-tools: true
+    cr-style:
+      narrative-background-color-overlay: transparent
+      narrative-background-color-sidebar: transparent
+      section-background-color: transparent
+      narrative-text-color-overlay: black
 ---
 
-Your report goes here.
+```{r, echo=FALSE, include=FALSE}
+library(tidyverse)
 
-```{r}
-# a test code chunk
+df <- read.csv("data/raw/combined_ESPN_Kaggle_WNBA_1997to2025.csv")
 ```
+
+Provide some background for the WNBA
+
+
+
+::::{.cr-section}
+A logical first question is:
+
+"Are the **best players** simply the **most experienced**?" @cr-rank-vs-time-blank
+
+:::{#cr-rank-vs-time-blank}
+```{r, echo=FALSE}
+df %>%
+  ggplot(aes(x = GP, y = RK)) + 
+  scale_y_reverse(
+    limits = c(50, 1),
+    breaks = c(1, seq(10, 50, 10))
+  ) +
+  scale_x_continuous(
+    limits = c(30, 45), 
+    breaks = seq(30, 45, 5)
+  ) + 
+  labs(x = "Games Played", y = "Rank") + 
+  theme_classic() + 
+  theme(
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+  )
+```
+:::
+
+If we look at the data... @cr-rank-vs-time-filled
+
+:::{#cr-rank-vs-time-filled}
+```{r, echo=FALSE}
+df %>%
+  ggplot(aes(x = GP, y = RK)) + 
+  geom_point() +
+  scale_y_reverse(
+    limits = c(50, 1),
+    breaks = c(1, seq(10, 50, 10))
+  ) +
+  scale_x_continuous(
+    limits = c(30, 45), 
+    breaks = seq(30, 45, 5)
+  ) + 
+  labs(x = "Games Played", y = "Rank") + 
+  theme_classic() + 
+  theme(
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+  )
+```
+:::
+
+...we can see that many players can play for a long time but not necessarily be the best ranking. @cr-rank-vs-time-annotated
+
+:::{#cr-rank-vs-time-annotated}
+```{r, echo=FALSE}
+df %>%
+  ggplot(aes(x = GP, y = RK)) + 
+  geom_point() +
+  annotate("rect", xmin = 43.5, xmax = 44.5, ymin = 1, ymax = 50, alpha = .2) + 
+  scale_y_reverse(
+    limits = c(50, 1),
+    breaks = c(1, seq(10, 50, 10))
+  ) +
+  scale_x_continuous(
+    limits = c(30, 45), 
+    breaks = seq(30, 45, 5)
+  ) + 
+  labs(x = "Games Played", y = "Rank") + 
+  theme_classic() + 
+  theme(
+    axis.title.x = element_text(size = 10),
+    axis.title.y = element_text(size = 10),
+    axis.text.x = element_text(size = 8),
+    axis.text.y = element_text(size = 8),
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, face = "italic"),
+  )
+```
+:::
+
+::::
 

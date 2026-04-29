@@ -1,5 +1,226 @@
 ---
-title: "Member 2 First Name & Last Name Initial"
+title: "Member 2 Nox Matse"
 ---
 
 Your exploratory data analysis of the team datasets go here.
+
+```{r}
+wnba2 <- read.csv("../WNBA_Stats_1997_2026.csv")
+```
+
+```{r}
+head(wnba2)
+```
+
+```{r}
+library(dplyr)
+
+wnba2$Draft.Pick[wnba2$Draft.Pick == "Undrafted"] <- NA
+wnba2$Draft.Pick <- as.numeric(wnba2$Draft.Pick)
+wnba2 <- wnba2[!is.na(wnba2$Draft.Pick), ]
+
+```
+
+```{r}
+# library(randomForest)
+# library(dplyr)
+# 
+# # Clean and select variables
+# wnba_clean <- wnba2 %>%
+#   select(Draft.Pick, Points.Per.Game, College...Origin, Win.Shares, Assists.Per.Game, Rebounds.Per.Game, Minutes.Per.Game, Height) %>%
+#   na.omit()
+# 
+# # Make sure overall_pick is numeric
+# wnba_clean$overall_pick <- as.numeric(wnba_clean$Draft.Pick)
+# 
+# # Train model
+# rf_model <- randomForest(
+#   Draft.Pick ~ .,
+#   data = wnba_clean,
+#   importance = TRUE
+# )
+# 
+# # View importance
+# importance(rf_model)
+# varImpPlot(rf_model)
+```
+
+```{r}
+# library(glmnet)
+# library(dplyr)
+# 
+# # Clean data
+# wnba_clean2 <- wnba2 %>%
+#   select(Draft.Pick, Points.Per.Game, College...Origin, Win.Shares, Assists.Per.Game, Rebounds.Per.Game, Minutes.Per.Game, Height) %>%
+#   na.omit()
+# 
+# # X and Y
+# x <- as.matrix(wnba_clean %>% select(-Draft.Pick))
+# y <- wnba_clean$Draft.Pick
+# 
+# # LASSO
+# cv_model <- cv.glmnet(x, y, alpha = 1)
+# lasso_model <- glmnet(x, y, alpha = 1, lambda = cv_model$lambda.min)
+# 
+# # Convert coefficients to dataframe
+# coef_df <- as.matrix(coef(lasso_model)) %>%
+#   as.data.frame()
+# 
+# # Rename the coefficient column safely
+# colnames(coef_df)[1] <- "coefficient"
+# 
+# # Add variable names + rank
+# coef_df <- coef_df %>%
+#   mutate(variable = rownames(.)) %>%
+#   arrange(desc(abs(coefficient)))
+# 
+# # View results
+# coef_df
+```
+
+```{r}
+library(dplyr)
+library(glmnet)
+
+# Step 1: clean data
+clean_data <- wnba2 %>%
+  mutate(
+    Draft.Pick = as.character(Draft.Pick),
+    Draft.Pick[Draft.Pick %in% c("Undrafted", "")] <- NA,
+    Draft.Pick = as.numeric(Draft.Pick)
+  ) %>%
+  filter(!is.na(Draft.Pick)) %>%
+  select(where(is.numeric)) %>%
+  na.omit()   # ⚠️ THIS is key: removes any remaining NA rows
+
+# Step 2: create X and y from SAME dataset
+x <- model.matrix(Draft.Pick ~ ., clean_data)[, -1]
+y <- clean_data$Draft.Pick
+
+# Step 3: run LASSO
+cv_model <- cv.glmnet(x, y, alpha = 1)
+lasso_model <- glmnet(x, y, alpha = 1, lambda = cv_model$lambda.min)
+
+# Step 4: extract important variables
+important_vars <- coef(lasso_model)
+important_vars[important_vars != 0]
+
+library(dplyr)
+
+coef_df <- as.matrix(coef(lasso_model)) %>%
+  as.data.frame()
+
+# Rename column
+colnames(coef_df)[1] <- "coefficient"
+
+# Add variable names and clean up
+coef_df <- coef_df %>%
+  mutate(variable = rownames(.)) %>%
+  filter(coefficient != 0) %>%   # keep only important variables
+  arrange(desc(abs(coefficient)))
+
+# View
+coef_df
+
+
+```
+```{r}
+library(dplyr)
+library(randomForest)
+
+# Step 1: clean data (same logic as before)
+clean_data <- wnba2 %>%
+  mutate(
+    Draft.Pick = as.character(Draft.Pick),
+    Draft.Pick[Draft.Pick %in% c("Undrafted", "")] <- NA,
+    Draft.Pick = as.numeric(Draft.Pick)
+  ) %>%
+  filter(!is.na(Draft.Pick)) %>%
+  select(where(is.numeric)) %>%
+  na.omit()
+
+# Step 2: run random forest
+set.seed(123)
+
+rf_model <- randomForest(
+  Draft.Pick ~ ., 
+  data = clean_data,
+  importance = TRUE,
+  ntree = 500
+)
+
+# Step 3: extract variable importance
+importance_df <- as.data.frame(importance(rf_model))
+importance_df$variable <- rownames(importance_df)
+
+# Sort by importance
+importance_df <- importance_df %>%
+  arrange(desc(IncNodePurity))
+
+# View results
+importance_df
+
+```
+
+```{r}
+varImpPlot(rf_model)
+
+```
+
+%IncMSE
+Measures how much prediction error increases if a variable is removed
+
+Higher = more important
+
+ IncNodePurity (right plot)
+
+Measures how much a variable improves tree splits
+
+both plots show that points per game, year drafted, year and minutes per minute are important from random forest 
+
+```{r}
+ggplot(clean_data, aes(x = FT., y = Blocks.Per.Game)) +
+  geom_bin2d(bins = 25) +
+  scale_fill_viridis_c(option = "C") +
+  geom_smooth(method = "loess", se = FALSE, color = "white", linewidth = 1) +
+  labs(
+    title = "Relationship Between Free Throw % and Blocks per Game",
+    x = "Free Throw Percentage (FT%)",
+    y = "Blocks Per Game",
+    fill = "Player Count"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+top_vars <- clean_data %>%
+  select(FT., Blocks.Per.Game, X3P., Turnovers.Per.Game, Points.Per.Game) %>%
+  pivot_longer(cols = everything(),
+               names_to = "variable",
+               values_to = "value")
+
+ggplot(top_vars, aes(x = value)) +
+  geom_density(fill = "#2C7FB8", alpha = 0.6) +
+  facet_wrap(~variable, scales = "free") +
+  labs(
+    title = "Distribution of Key Performance Variables",
+    x = "Value",
+    y = "Density"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    strip.text = element_text(face = "bold"),
+    plot.title = element_text(face = "bold")
+  )
+
+```
+

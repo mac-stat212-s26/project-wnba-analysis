@@ -1,0 +1,473 @@
+---
+title: "Exploratory Data Analysis: WNBA Draft Data"
+author: "Hamza Mahamud"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(tidyverse)
+library(ggplot2)
+library(ggrepel)
+library(corrplot)
+library(scales)
+library(knitr)
+library(kableExtra)
+```
+
+## 1. Load & Inspect Data
+
+```{r load-data}
+df <- read_csv("/Users/hamzamahamud/project-wnba-analysis/data/raw/wnbadraft.csv")
+
+# Preview
+glimpse(df)
+head(df) |> kable() |> kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+```{r summary-stats}
+summary(df)
+```
+
+---
+
+## 2. Data Cleaning
+
+```{r clean-data}
+# Separate players who played vs. those who never played
+df_played <- df |> filter(!is.na(games) & games > 0)
+df_no_play <- df |> filter(is.na(games) | games == 0)
+
+cat("Players with WNBA stats:", nrow(df_played), "\n")
+cat("Players with no recorded games:", nrow(df_no_play), "\n")
+cat("% who never played:", round(nrow(df_no_play) / nrow(df) * 100, 1), "%\n")
+
+# Classify player tiers by win shares
+df_played <- df_played |>
+  mutate(
+    tier = case_when(
+      win_shares >= 4    ~ "Elite",
+      win_shares >= 1.5  ~ "Solid Contributor",
+      win_shares >= 0    ~ "Fringe/Bench",
+      TRUE               ~ "Negative Impact"
+    ),
+    tier = factor(tier, levels = c("Elite", "Solid Contributor", "Fringe/Bench", "Negative Impact")),
+    pick_group = case_when(
+      overall_pick <= 6  ~ "Top 6",
+      overall_pick <= 12 ~ "Picks 7–12",
+      overall_pick <= 24 ~ "Picks 13–24",
+      TRUE               ~ "Picks 25+"
+    ),
+    pick_group = factor(pick_group, levels = c("Top 6", "Picks 7–12", "Picks 13–24", "Picks 25+"))
+  )
+```
+
+---
+
+## 3. Missing Data Overview
+
+```{r missing-data}
+df |>
+  summarise(across(everything(), ~ sum(is.na(.)))) |>
+  pivot_longer(everything(), names_to = "column", values_to = "missing") |>
+  mutate(pct_missing = round(missing / nrow(df) * 100, 1)) |>
+  arrange(desc(missing)) |>
+  kable(caption = "Missing values per column") |>
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+```{r never-played-bar}
+# What share of each draft class never played?
+df |>
+  mutate(played = !is.na(games) & games > 0) |>
+  group_by(year) |>
+  summarise(
+    total = n(),
+    never_played = sum(!played),
+    pct = never_played / total * 100
+  ) |>
+  ggplot(aes(x = factor(year), y = pct, fill = factor(year))) +
+  geom_col(width = 0.6, show.legend = FALSE) +
+  geom_text(aes(label = paste0(round(pct), "%")), vjust = -0.4, size = 4) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "% of Draft Class That Never Played a WNBA Game",
+    x = "Draft Year", y = "% of Picks"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+## 4. Draft Pick vs. Performance
+
+### 4.1 Win Shares by Overall Pick
+
+```{r ws-by-pick-scatter}
+df_played |>
+  ggplot(aes(x = overall_pick, y = win_shares, color = factor(year))) +
+  geom_point(size = 3, alpha = 0.75) +
+  geom_smooth(method = "loess", se = TRUE, color = "black", linewidth = 0.8, linetype = "dashed") +
+  geom_text_repel(
+    data = df_played |> filter(win_shares >= 4),
+    aes(label = player), size = 3, max.overlaps = 10
+  ) +
+  scale_color_brewer(palette = "Set1", name = "Draft Year") +
+  labs(
+    title = "Win Shares vs. Draft Pick Number",
+    subtitle = "LOESS curve shows overall trend; labeled players are top performers",
+    x = "Overall Pick", y = "Career Win Shares (WNBA)"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### 4.2 Points per Game by Pick Group
+
+```{r ppg-pick-group-box}
+df_played |>
+  ggplot(aes(x = pick_group, y = points, fill = pick_group)) +
+  geom_boxplot(alpha = 0.8, outlier.shape = 21, outlier.fill = "white") +
+  geom_jitter(width = 0.15, size = 1.5, alpha = 0.5) +
+  scale_fill_brewer(palette = "Pastel1") +
+  labs(
+    title = "Points Per Game by Draft Pick Range",
+    x = "Pick Group", y = "Points Per Game",
+    fill = "Pick Group"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### 4.3 Win Shares per 40 Minutes by Pick Group
+
+```{r ws40-pick-group}
+df_played |>
+  group_by(pick_group) |>
+  summarise(
+    mean_ws40 = mean(win_shares_40, na.rm = TRUE),
+    median_ws40 = median(win_shares_40, na.rm = TRUE),
+    n = n()
+  ) |>
+  ggplot(aes(x = pick_group, y = mean_ws40, fill = pick_group)) +
+  geom_col(width = 0.6, show.legend = FALSE) +
+  geom_text(aes(label = round(mean_ws40, 3)), vjust = -0.4, size = 4) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "Average Win Shares per 40 Minutes by Pick Group",
+    x = "Pick Group", y = "Mean WS/40"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### 4.4 Linear Regression: Pick Number → Win Shares
+
+```{r lm-pick-ws}
+model_ws <- lm(win_shares ~ overall_pick, data = df_played)
+summary(model_ws)
+```
+
+```{r lm-pick-ws-plot}
+df_played |>
+  ggplot(aes(x = overall_pick, y = win_shares)) +
+  geom_point(alpha = 0.6, color = "#2c7bb6") +
+  geom_smooth(method = "lm", color = "#d7191c", se = TRUE) +
+  labs(
+    title = "Linear Regression: Draft Pick → Win Shares",
+    subtitle = paste0("Adj. R² = ", round(summary(model_ws)$adj.r.squared, 3),
+                      "  |  p-value: ", format.pval(summary(model_ws)$coefficients[2, 4], digits = 3)),
+    x = "Overall Pick", y = "Win Shares"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### 4.5 Multiple Regression: Pick + Year → Win Shares
+
+```{r lm-multi}
+model_multi <- lm(win_shares ~ overall_pick + factor(year), data = df_played)
+summary(model_multi)
+```
+
+### 4.6 Correlation Matrix (Performance Variables)
+
+```{r corrplot}
+perf_vars <- df_played |>
+  select(overall_pick, games, win_shares, win_shares_40, minutes_played, points, total_rebounds, assists) |>
+  drop_na()
+
+cor_matrix <- cor(perf_vars)
+
+corrplot(cor_matrix,
+         method = "color",
+         type = "upper",
+         addCoef.col = "black",
+         number.cex = 0.75,
+         tl.col = "black",
+         tl.srt = 45,
+         title = "Correlation Matrix: Draft & Performance Variables",
+         mar = c(0, 0, 2, 0))
+```
+
+---
+
+## 5. College → WNBA Success
+
+### 5.1 Top Colleges by Draft Volume
+
+```{r top-colleges-count}
+df |>
+  filter(!is.na(college) & college != "") |>
+  count(college, sort = TRUE) |>
+  slice_head(n = 15) |>
+  ggplot(aes(x = reorder(college, n), y = n, fill = n)) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_gradient(low = "#c6dbef", high = "#08519c") +
+  labs(
+    title = "Top 15 Colleges by Number of WNBA Draft Picks",
+    x = NULL, y = "Number of Draft Picks"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### 5.2 Top Colleges by Average Win Shares (min. 3 draftees)
+
+```{r top-colleges-ws}
+df_played |>
+  filter(!is.na(college) & college != "") |>
+  group_by(college) |>
+  summarise(
+    mean_ws = mean(win_shares, na.rm = TRUE),
+    n_players = n()
+  ) |>
+  filter(n_players >= 3) |>
+  arrange(desc(mean_ws)) |>
+  slice_head(n = 15) |>
+  ggplot(aes(x = reorder(college, mean_ws), y = mean_ws, fill = mean_ws)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = paste0("n=", n_players)), hjust = -0.1, size = 3.5) +
+  coord_flip() +
+  scale_fill_gradient(low = "#fee8c8", high = "#e34a33") +
+  labs(
+    title = "Average Win Shares by College (min. 3 draftees with playing time)",
+    x = NULL, y = "Mean Win Shares"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### 5.3 College Win Shares Distribution (Top 8 Programs)
+
+```{r college-ws-violin}
+top_colleges <- df_played |>
+  filter(!is.na(college) & college != "") |>
+  count(college, sort = TRUE) |>
+  slice_head(n = 8) |>
+  pull(college)
+
+df_played |>
+  filter(college %in% top_colleges) |>
+  ggplot(aes(x = reorder(college, win_shares, median), y = win_shares, fill = college)) +
+  geom_violin(alpha = 0.7, trim = FALSE) +
+  geom_boxplot(width = 0.1, fill = "white", outlier.shape = NA) +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set3") +
+  labs(
+    title = "Win Shares Distribution for Top 8 Most-Drafted Programs",
+    x = NULL, y = "Win Shares"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### 5.4 Do International Players Perform Differently?
+
+```{r intl-vs-domestic}
+df_played <- df_played |>
+  mutate(player_type = if_else(!is.na(former) & former != "", "International", "Domestic (College)"))
+
+df_played |>
+  group_by(player_type) |>
+  summarise(
+    n = n(),
+    mean_ws = round(mean(win_shares, na.rm = TRUE), 2),
+    mean_pts = round(mean(points, na.rm = TRUE), 2),
+    mean_games = round(mean(games, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Domestic vs. International Draftee Performance") |>
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+```{r intl-vs-domestic-plot}
+df_played |>
+  ggplot(aes(x = player_type, y = win_shares, fill = player_type)) +
+  geom_boxplot(alpha = 0.8, outlier.shape = 21, outlier.fill = "white") +
+  geom_jitter(width = 0.15, size = 2, alpha = 0.5) +
+  scale_fill_manual(values = c("#66c2a5", "#fc8d62")) +
+  labs(
+    title = "Win Shares: Domestic (College) vs. International Players",
+    x = NULL, y = "Win Shares"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+---
+
+## 6. Year-over-Year Trends
+
+### 6.1 Average Performance by Draft Year
+
+```{r yearly-avg}
+df_played |>
+  group_by(year) |>
+  summarise(
+    n = n(),
+    mean_ws = mean(win_shares, na.rm = TRUE),
+    mean_pts = mean(points, na.rm = TRUE),
+    mean_reb = mean(total_rebounds, na.rm = TRUE),
+    mean_ast = mean(assists, na.rm = TRUE),
+    mean_games = mean(games, na.rm = TRUE)
+  ) |>
+  kable(digits = 2, caption = "Mean Performance Stats by Draft Year") |>
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+```{r yearly-ws-bar}
+df_played |>
+  group_by(year) |>
+  summarise(mean_ws = mean(win_shares, na.rm = TRUE)) |>
+  ggplot(aes(x = factor(year), y = mean_ws, fill = factor(year))) +
+  geom_col(width = 0.6, show.legend = FALSE) +
+  geom_text(aes(label = round(mean_ws, 2)), vjust = -0.4, size = 4.5) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(
+    title = "Average Win Shares by Draft Class Year",
+    x = "Draft Year", y = "Mean Win Shares"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+### 6.2 Distribution of Win Shares Across Years
+
+```{r yearly-ws-violin}
+df_played |>
+  ggplot(aes(x = factor(year), y = win_shares, fill = factor(year))) +
+  geom_violin(alpha = 0.7, trim = FALSE) +
+  geom_boxplot(width = 0.08, fill = "white", outlier.shape = NA) +
+  scale_fill_brewer(palette = "Pastel2") +
+  labs(
+    title = "Win Shares Distribution by Draft Class",
+    x = "Draft Year", y = "Win Shares"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### 6.3 Points, Rebounds & Assists Over Draft Years
+
+```{r yearly-stats-facet}
+df_played |>
+  select(year, points, total_rebounds, assists) |>
+  pivot_longer(cols = -year, names_to = "stat", values_to = "value") |>
+  mutate(stat = recode(stat,
+    "points" = "Points Per Game",
+    "total_rebounds" = "Rebounds Per Game",
+    "assists" = "Assists Per Game"
+  )) |>
+  group_by(year, stat) |>
+  summarise(mean_val = mean(value, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(x = factor(year), y = mean_val, group = stat, color = stat)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  facet_wrap(~stat, scales = "free_y") +
+  scale_color_brewer(palette = "Dark2") +
+  labs(
+    title = "Average Per-Game Stats by Draft Year",
+    x = "Draft Year", y = "Average Value", color = NULL
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+### 6.4 Top Performers from Each Draft Class
+
+```{r top-per-year}
+df_played |>
+  group_by(year) |>
+  slice_max(win_shares, n = 5) |>
+  select(year, overall_pick, player, college, games, win_shares, points, total_rebounds, assists) |>
+  arrange(year, desc(win_shares)) |>
+  kable(caption = "Top 5 Players by Win Shares in Each Draft Class") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+```
+
+---
+
+## 7. Multivariate Regression: Predicting Win Shares
+
+```{r lm-full}
+model_full <- lm(win_shares ~ overall_pick + games + minutes_played + factor(year),
+                 data = df_played)
+summary(model_full)
+```
+
+```{r lm-residuals}
+# Residual diagnostics
+par(mfrow = c(2, 2))
+plot(model_full)
+par(mfrow = c(1, 1))
+```
+
+```{r lm-predicted-vs-actual}
+df_played |>
+  mutate(predicted_ws = predict(model_full, newdata = df_played)) |>
+  ggplot(aes(x = predicted_ws, y = win_shares)) +
+  geom_point(alpha = 0.6, color = "#2c7bb6") +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  geom_text_repel(
+    data = df_played |>
+      mutate(predicted_ws = predict(model_full, newdata = df_played),
+             resid = win_shares - predicted_ws) |>
+      filter(abs(resid) > 1.5),
+    aes(label = player), size = 3
+  ) +
+  labs(
+    title = "Predicted vs. Actual Win Shares",
+    subtitle = "Red dashed line = perfect prediction; labeled = largest residuals",
+    x = "Predicted Win Shares", y = "Actual Win Shares"
+  ) +
+  theme_minimal(base_size = 13)
+```
+
+---
+
+## 8. Summary Findings
+
+```{r summary-table}
+tibble(
+  Finding = c(
+    "Draft pick predicts performance",
+    "Top 6 picks outperform later picks",
+    "Best college programs",
+    "International vs. domestic",
+    "Draft class quality by year",
+    "Key predictors of win shares"
+  ),
+  Detail = c(
+    "Earlier picks have higher average win shares, but relationship is noisy (check adj. R²)",
+    "Top 6 picks average significantly more PPG and WS than picks 13+",
+    "Programs like UConn, Baylor, Oregon, and South Carolina consistently produce high-WS players",
+    "Domestic college players slightly outperform internationals on average, but sample is small",
+    "Compare mean WS across years; later classes have fewer seasons to accumulate stats",
+    "Games played and minutes are strongest predictors; pick number has modest independent effect"
+  )
+) |>
+  kable(caption = "Key EDA Takeaways") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = TRUE)
+```
